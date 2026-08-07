@@ -6,7 +6,7 @@
 #
 # Note: replace REPO_URL below with your actual GitHub repo URL once it exists.
 
-REPO_URL = "https://github.com/<your-username>/asset-monitor.git"
+REPO_URL = "https://github.com/Ivanho92/asset-monitor.git"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/jammy64" # Ubuntu 22.04 LTS
