@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+
+# The XMPP service (ejabberd) gets added here in a later step, once the backend's
+# XMPP listener (Smack) is implemented. Keeping the skeleton minimal for now so the
+# core plumbing (backend + frontend reachable, building correctly) is verified first.
