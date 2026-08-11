@@ -11,6 +11,14 @@ services:
     depends_on:
       - backend
 
+  fake-sources:
+    build: ./fake-sources
+    environment:
+      - BACKEND_URL=http://backend:8080
+      - INTERVAL_SECONDS=5
+    depends_on:
+      - backend
+
 # The XMPP service (ejabberd) gets added here in a later step, once the backend's
 # XMPP listener (Smack) is implemented. Keeping the skeleton minimal for now so the
 # core plumbing (backend + frontend reachable, building correctly) is verified first.
