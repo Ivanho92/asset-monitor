@@ -6,11 +6,8 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   template: `
     <h1>{{ title() }}</h1>
-    <p>Frontend skeleton is running. Live feed table comes in a later step.</p>
-
-    <router-outlet>
+    <router-outlet />
   `,
-  styles: [],
 })
 export class App {
   protected readonly title = signal('Asset Monitor');
