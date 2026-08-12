@@ -1,10 +1,10 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval, switchMap } from 'rxjs';
 import { ReportApiService } from './report-api.service';
 import { Report } from './report.model';
 
-@Injectable()
+@Service()
 export class ReportTableService {
   private readonly reportApi = inject(ReportApiService);
 
