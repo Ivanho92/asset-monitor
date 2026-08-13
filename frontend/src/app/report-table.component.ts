@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReportTableService } from './report-table.service';
 
 @Component({
   imports: [DatePipe],
   selector: 'app-report-table',
   template: `
-    <p>Live report feed (refreshing every {{ pollSeconds() }}s)</p>
+    <p>Live report feed (pushed over WebSocket)</p>
 
     <table>
       <thead>
@@ -29,7 +29,7 @@ import { ReportTableService } from './report-table.service';
           </tr>
         } @empty {
           <tr>
-            <td colspan="5">No reports yet -- waiting for the fake source generator...</td>
+            <td colspan="5">No reports found.</td>
           </tr>
         }
       </tbody>
@@ -58,6 +58,4 @@ import { ReportTableService } from './report-table.service';
 })
 export class ReportTableComponent {
   protected readonly reportTableService = inject(ReportTableService);
-
-  protected readonly pollSeconds = computed(() => this.reportTableService.pollIntervalMs() / 1000);
 }

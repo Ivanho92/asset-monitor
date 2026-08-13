@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Report } from './report.model';
 
-@Service()
+@Service({ autoProvided: false })
 export class ReportApiService {
   private readonly http = inject(HttpClient);
 
