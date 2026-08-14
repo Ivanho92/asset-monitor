@@ -19,6 +19,16 @@ services:
     depends_on:
       - backend
 
-# The XMPP service (ejabberd) gets added here in a later step, once the backend's
-# XMPP listener (Smack) is implemented. Keeping the skeleton minimal for now so the
-# core plumbing (backend + frontend reachable, building correctly) is verified first.
+  xmpp:
+    image: ghcr.io/processone/ejabberd:25.10
+    ports:
+      - "5222:5222"   # XMPP client port
+      - "5280:5280"   # Web admin UI (localhost:5280/admin)
+    environment:
+      - REGISTER_ADMIN_PASSWORD=changeme
+      - CTL_ON_CREATE=register backend localhost changeme ;
+                        register unit-07 localhost changeme ;
+                        register unit-12 localhost changeme ;
+                        register gate-A localhost changeme ;
+                        register gate-B localhost changeme ;
+                        register beacon-03 localhost changeme
