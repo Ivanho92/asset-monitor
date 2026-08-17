@@ -5,6 +5,7 @@ services:
       - "8080:8080"
     depends_on:
       - xmpp
+      - db
 
   frontend:
     build: ./frontend
@@ -39,4 +40,18 @@ services:
                         register gate-B localhost changeme ;
                         register beacon-03 localhost changeme
     volumes:
-          - ./xmpp/ejabberd.yml:/opt/ejabberd/conf/ejabberd.yml:ro
+      - ./xmpp/ejabberd.yml:/opt/ejabberd/conf/ejabberd.yml:ro
+
+  db:
+    image: postgres:18
+    environment:
+      - POSTGRES_DB=assetmonitor
+      - POSTGRES_USER=assetmonitor
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql
+
+volumes:
+  db-data:
