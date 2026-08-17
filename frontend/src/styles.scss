@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  font-family: system-ui;
+}
+
+// utilities
+.wrapper {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+// animations
+.row-enter {
+  animation: slide-fade 200ms;
+}
+
+@keyframes slide-fade {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,61 +1,68 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { Table } from 'primeng/table';
 import { ReportTableService } from './report-table.service';
+import { Report } from './report.model';
+import { ExclamationCircle } from '@primeicons/angular/exclamation-circle';
 
 @Component({
-  imports: [DatePipe],
+  imports: [DatePipe, Table, ExclamationCircle],
   selector: 'app-report-table',
   template: `
-    <p>Live report feed (pushed over WebSocket)</p>
+    <h2>Live report feed</h2>
 
-    <table>
-      <thead>
+    <p-table
+      [value]="reportTableService.reports()"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      showGridlines
+      stripedRows
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50, 100]"
+      [totalRecords]="reportTableService.reports().length"
+    >
+      <ng-template #header>
         <tr>
+          <th [style.width]="0"></th>
           <th>Time</th>
           <th>Source</th>
           <th>Type</th>
           <th>Status</th>
           <th>Priority</th>
         </tr>
-      </thead>
-      <tbody>
-        @for (report of reportTableService.reports(); track report.timestamp + report.sourceId) {
-          <tr [class.high-priority]="report.priority === 'HIGH'">
-            <td>{{ report.timestamp | date: 'HH:mm:ss' }}</td>
-            <td>{{ report.sourceId }}</td>
-            <td>{{ report.entityType }}</td>
-            <td>{{ report.status }}</td>
-            <td>{{ report.priority }}</td>
-          </tr>
-        } @empty {
-          <tr>
-            <td colspan="5">No reports found.</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+      </ng-template>
+      <ng-template #body let-report let-rowIndex="rowIndex">
+        <tr
+          [class.high-priority]="isHighPriorityReport(report)"
+          [animate.enter]="rowIndex === 0 ? 'row-enter' : ''"
+        >
+          <td>
+            @if (isHighPriorityReport(report)) {
+              <svg data-p-icon="exclamation-circle"></svg>
+            }
+          </td>
+          <td>{{ report.timestamp | date: 'HH:mm:ss' }}</td>
+          <td>{{ report.sourceId }}</td>
+          <td>{{ report.entityType }}</td>
+          <td>{{ report.status }}</td>
+          <td>{{ report.priority }}</td>
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="6">No reports found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   `,
   styles: `
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 800px;
-    }
-    th,
-    td {
-      border: 1px solid #ccc;
-      padding: 0.4rem 0.8rem;
-      text-align: left;
-    }
-    th {
-      background: #f0f0f0;
-    }
     .high-priority {
-      background: #ffe3e3;
-      font-weight: bold;
+      background: var(--p-orange-50) !important;
     }
   `,
 })
 export class ReportTableComponent {
   protected readonly reportTableService = inject(ReportTableService);
+
+  protected readonly isHighPriorityReport = (report: Report) => report.priority === 'HIGH';
 }

@@ -5,8 +5,10 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet],
   template: `
-    <h1>{{ title() }}</h1>
-    <router-outlet />
+    <div class="wrapper">
+      <h1>{{ title() }}</h1>
+      <router-outlet />
+    </div>
   `,
 })
 export class App {
