@@ -1,1 +1,2 @@
 requests==2.32.3
+slixmpp==1.10.0

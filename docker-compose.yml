@@ -3,6 +3,8 @@ services:
     build: ./backend
     ports:
       - "8080:8080"
+    depends_on:
+      - xmpp
 
   frontend:
     build: ./frontend
@@ -14,10 +16,14 @@ services:
   fake-sources:
     build: ./fake-sources
     environment:
-      - BACKEND_URL=http://backend:8080
+      - XMPP_HOST=xmpp
+      - XMPP_PORT=5222
+      - XMPP_DOMAIN=localhost
+      - SOURCE_PASSWORD=changeme
+      - BACKEND_JID=backend@localhost
       - INTERVAL_SECONDS=5
     depends_on:
-      - backend
+      - xmpp
 
   xmpp:
     image: ghcr.io/processone/ejabberd:25.10
@@ -32,3 +38,5 @@ services:
                         register gate-A localhost changeme ;
                         register gate-B localhost changeme ;
                         register beacon-03 localhost changeme
+    volumes:
+          - ./xmpp/ejabberd.yml:/opt/ejabberd/conf/ejabberd.yml:ro

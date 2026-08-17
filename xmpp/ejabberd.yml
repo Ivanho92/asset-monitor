@@ -1,0 +1,48 @@
+hosts:
+  - "localhost"
+
+loglevel: info
+
+listen:
+  -
+    port: 5222
+    ip: "::"
+    module: ejabberd_c2s
+    starttls: false
+  -
+    port: 5280
+    ip: "::"
+    module: ejabberd_http
+    request_handlers:
+      "/admin": ejabberd_web_admin
+
+auth_method: [mnesia]
+
+acl:
+  admin:
+    user: "admin@localhost"
+
+access_rules:
+  local:
+    - allow: all
+  c2s:
+    - allow: all
+  announce:
+    - allow: admin
+  configure:
+    - allow: admin
+
+shaper:
+  normal: 1000
+  fast: 50000
+
+shaper_rules:
+  max_user_sessions: 10
+  c2s_shaper:
+    none: admin
+    normal: all
+
+modules:
+  mod_disco: {}
+  mod_roster: {}
+  mod_offline: {}
