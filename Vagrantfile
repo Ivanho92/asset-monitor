@@ -16,6 +16,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.network "forwarded_port", guest: 4200, host: 4200
   config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.network "forwarded_port", guest: 5280, host: 5280 # ejabberd admin UI
+  config.vm.network "forwarded_port", guest: 5432, host: 5432 # Postgres (DB client access)
 
   # One-time setup: install Docker. Only runs on first `vagrant up`.
   config.vm.provision "shell", inline: <<-SHELL
