@@ -1,5 +1,7 @@
 # Asset Monitor
 
+![Asster Monitor Video](./assets/assetmonitor.gif)
+
 A small demo project simulating a report aggregation and alerting system, inspired by
 concepts behind operational-awareness systems (sharing and exchange of
 information between sources and analysts). I built it to gain practical experience with technologies I had limited professional exposure to, including XMPP messaging, Linux/VM operations, and DevSecOps pipelines.
